@@ -1,0 +1,45 @@
+{
+  "name": "academic-ecosystem",
+  "version": "20.0.0",
+  "private": true,
+  "description": "Academic Ecosystem production launch, validation, rollback, and reliability toolkit",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test test/*.test.js",
+    "migrate": "node scripts/migrate.js",
+    "backup": "node scripts/backup.js",
+    "start:prod": "NODE_ENV=production node server.js",
+    "check": "node --check server.js && node --check js/backend-client.js && node --check js/app.js",
+    "launch:check": "node scripts/launch-check.js",
+    "backup:verify": "node scripts/backup-verify.js",
+    "release:check": "node scripts/release-check.js",
+    "release:manifest": "node scripts/release-manifest.js",
+    "deploy:verify": "node scripts/deploy-verify.js",
+    "phase15:check": "node scripts/phase15-check.js",
+    "phase16:check": "node scripts/phase16-check.js",
+    "backup:prune": "node scripts/backup-prune.js",
+    "restore:check": "node scripts/restore-check.js",
+    "ops:snapshot": "node scripts/ops-snapshot.js",
+    "phase17:check": "node scripts/phase17-check.js",
+    "feedback:summary": "node scripts/feedback-summary.js",
+    "phase18:check": "node scripts/phase18-check.js",
+    "render:deploy": "node scripts/render-deploy.js",
+    "production:verify": "node scripts/production-verify.js",
+    "render:deploy:wait": "node scripts/render-deploy.js --wait",
+    "phase19:check": "node scripts/phase19-check.js",
+    "performance:report": "node scripts/performance-report.js",
+    "launch:preflight": "node scripts/launch-preflight.js",
+    "production:smoke": "node scripts/production-smoke.js",
+    "render:rollback": "node scripts/render-rollback.js",
+    "phase20:check": "node scripts/phase20-check.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "express": "^5.1.0"
+  }
+}

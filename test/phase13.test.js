@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.join(__dirname,'..');
+const server=fs.readFileSync(path.join(root,'server.js'),'utf8');
+const pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
+assert.equal(pkg.version,'20.0.0');
+assert.match(server,/\/api\/ops\/status/);
+assert.match(server,/PRAGMA integrity_check/);
+assert.match(server,/OPS_TOKEN/);
+assert.ok(pkg.scripts['launch:check']);
+assert.ok(pkg.scripts['backup:verify']);
+console.log('Legacy operational tests passed against the Phase 20 release.');

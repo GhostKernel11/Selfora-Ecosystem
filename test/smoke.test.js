@@ -1,0 +1,15 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const server = fs.readFileSync(path.join(__dirname, '..', 'server.js'), 'utf8');
+const client = fs.readFileSync(path.join(__dirname, '..', 'js', 'backend-client.js'), 'utf8');
+assert.match(server, /schema_migrations/);
+assert.match(server, /\/api\/ready/);
+assert.match(server, /\/api\/metrics/);
+assert.match(server, /\/api\/ops\/status/);
+assert.match(server, /PRAGMA integrity_check/);
+assert.match(server, /SIGTERM/);
+assert.match(server, /Content-Security-Policy/);
+assert.match(server, /csrf/);
+assert.match(client, /fetch\(/);
+console.log('Phase 13 smoke tests passed.');

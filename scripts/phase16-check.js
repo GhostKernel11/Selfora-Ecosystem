@@ -1,0 +1,12 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const cp = require('node:child_process');
+const required=['package.json','server.js','render.yaml','PHASE16.md','scripts/backup-prune.js','scripts/restore-check.js','scripts/ops-snapshot.js'];
+for(const file of required) if(!fs.existsSync(path.join(process.cwd(),file))) throw new Error(`Missing ${file}`);
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+if(!/^1[6-8]\.0\.0$/.test(pkg.version)) throw new Error(`Unsupported release version ${pkg.version}`);
+for(const script of ['phase16:check','backup:prune','restore:check','ops:snapshot']) if(!pkg.scripts[script]) throw new Error(`Missing ${script} script`);
+for(const file of ['server.js','scripts/backup-prune.js','scripts/restore-check.js','scripts/ops-snapshot.js']) cp.execFileSync(process.execPath,['--check',file],{stdio:'inherit'});
+const server=fs.readFileSync('server.js','utf8');
+for(const needle of ["phase:16","/api/ops/backup","Backup could not be created."]) if(!server.includes(needle)) throw new Error(`server.js missing ${needle}`);
+console.log('Phase 16 reliability checks passed.');

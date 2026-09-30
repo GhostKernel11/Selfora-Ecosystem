@@ -1,0 +1,11 @@
+const fs=require('node:fs');
+const cp=require('node:child_process');
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const required=['package.json','server.js','render.yaml','Dockerfile','DEPLOYMENT.md','PHASE18.md','scripts/render-deploy.js','scripts/production-verify.js'];
+for(const f of required) if(!fs.existsSync(f)) throw new Error(`Missing ${f}`);
+if(pkg.version!=='18.0.0') throw new Error(`Expected 18.0.0, found ${pkg.version}`);
+for(const s of ['phase18:check','render:deploy','production:verify','render:deploy:wait']) if(!pkg.scripts[s]) throw new Error(`Missing ${s}`);
+for(const f of ['server.js','scripts/render-deploy.js','scripts/production-verify.js']) cp.execFileSync(process.execPath,['--check',f],{stdio:'inherit'});
+const render=fs.readFileSync('render.yaml','utf8');
+for(const n of ['runtime: docker','healthCheckPath: /api/ready','mountPath: /var/data']) if(!render.includes(n)) throw new Error(`render.yaml missing ${n}`);
+console.log('Phase 18 deployment and production verification checks passed.');

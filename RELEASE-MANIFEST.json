@@ -1,0 +1,245 @@
+{
+  "generatedAt": "2026-09-29T08:39:38.036Z",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "bytes": 56,
+      "sha256": "5fdec6583f5d3e41b70549d89da3afd7854f35ea188175a30dbb1bf769919ecb"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 428,
+      "sha256": "1ccbc1d8471ae68ae5a69c46bda23f14aa559905b9ffc8935f5a5907e683d153"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 79,
+      "sha256": "4d7e5ed1d4c7d49e9e4fd99c94e937b768e92fd43bb2522786417c66539292fe"
+    },
+    {
+      "path": "css/styles.css",
+      "bytes": 26900,
+      "sha256": "803c0ed7b47d6903b5cd86c3a9c4fc39b4d865814abba21e3792fda554b2de95"
+    },
+    {
+      "path": "DEPLOYMENT.md",
+      "bytes": 914,
+      "sha256": "c5cc2855ac9fbe51693d1d337a1d7910f280c607a1cbe26fb4e2daaa1b6642da"
+    },
+    {
+      "path": "docker-compose.yml",
+      "bytes": 640,
+      "sha256": "fff459d9c735dbfb96ae1bbb6b0d53699ed78b2d26cc839eaf482976a555103c"
+    },
+    {
+      "path": "Dockerfile",
+      "bytes": 478,
+      "sha256": "4dc1d3d2a07e346cb4046996a1be28fc3094a4afd2d056811c8c7d36a120a3ad"
+    },
+    {
+      "path": "index.html",
+      "bytes": 4342,
+      "sha256": "9063be6449dcce23ef8e74d58b063bb34ebd80351b9e372001435504d0b7ac76"
+    },
+    {
+      "path": "js/app.js",
+      "bytes": 108395,
+      "sha256": "fc40ddcfd6200cc2797056454629de3b7a903d45686326dec0ab1b1064b2d439"
+    },
+    {
+      "path": "js/backend-client.js",
+      "bytes": 10982,
+      "sha256": "b0597f18c21831f75f8ba503176a3ef267c6bdbf591906296df3e6acdea21740"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1934,
+      "sha256": "df1a28ea1a577f946006e6cdb82bac980cf257223fe0197e35f522f5167fa30f"
+    },
+    {
+      "path": "PHASE13.md",
+      "bytes": 936,
+      "sha256": "bc0cb7c721fddf5c1c542897d309130cf49c4564a14f66505e337a0ecf817091"
+    },
+    {
+      "path": "PHASE14.md",
+      "bytes": 945,
+      "sha256": "1d466d9d06ae142479210531f52299ce94984ebe8c935ae99261e880ca678044"
+    },
+    {
+      "path": "PHASE15.md",
+      "bytes": 1061,
+      "sha256": "96e0601da3ed334a44723c832e28290d54cec1233a4586ddbca162478defa2f7"
+    },
+    {
+      "path": "PHASE16.md",
+      "bytes": 2478,
+      "sha256": "d1d3692b8169c3c76ccdab1808d7bcca1ca3c9c1163148d4d22b2b7ed0ee2ae6"
+    },
+    {
+      "path": "PHASE17.md",
+      "bytes": 1041,
+      "sha256": "6820fc29b368843236791ee2a1bbbd8d0ae2152e499ebc73d55822108ba77d11"
+    },
+    {
+      "path": "PHASE19.md",
+      "bytes": 1215,
+      "sha256": "c6b4af8318b5404c5b8feb73170b67db7d4309add66a85196854dc3f10c2e0e6"
+    },
+    {
+      "path": "PHASE20.md",
+      "bytes": 2416,
+      "sha256": "e02e39ba98619b48530f0a0a8942e8be14ad68f95fd0de464b8ac52fd1586fc2"
+    },
+    {
+      "path": "PROJECT_STRUCTURE.md",
+      "bytes": 813,
+      "sha256": "f9279540ec20aca2114c496621edfbb716c7634690c493ebe0296fc294fc7b36"
+    },
+    {
+      "path": "README.md",
+      "bytes": 608,
+      "sha256": "f5cd979db65b6d3fc153f777e716e5f24c2dc43e849b070f5651e337614d0933"
+    },
+    {
+      "path": "RELEASE-MANIFEST.json",
+      "bytes": 6614,
+      "sha256": "7e911077ae51feb9446476a8ea9353162fbb58d36dc2a15b608b1c7e894663ff"
+    },
+    {
+      "path": "render.yaml",
+      "bytes": 459,
+      "sha256": "d2d87237ac88ff31ae3d45faf406292a46df85ad186fa91e112a280acdfddb37"
+    },
+    {
+      "path": "scripts/backup-prune.js",
+      "bytes": 678,
+      "sha256": "2b7176fe9b2e1f602c5bfc22a657c515c180493b8259b68ed6a20e2c7e7cdbf5"
+    },
+    {
+      "path": "scripts/backup-verify.js",
+      "bytes": 665,
+      "sha256": "ec02aa2b0b43a28677b61141a8cf0413a54a95b0f6236910dc40fc06f9057fb0"
+    },
+    {
+      "path": "scripts/backup.js",
+      "bytes": 754,
+      "sha256": "3ef602829dc32fc0ce5d7b738f12c4dc7370c6aa584a1354954af9c3a25c53dc"
+    },
+    {
+      "path": "scripts/deploy-verify.js",
+      "bytes": 508,
+      "sha256": "962024ad97613e609e1e207a74edd44f89e972f49b4138f106e4019ef5d3b2de"
+    },
+    {
+      "path": "scripts/feedback-summary.js",
+      "bytes": 805,
+      "sha256": "f7dd6f4ef3752fdb3a051a766e92b1044153539e0b7d72be1f06f2a438a2892a"
+    },
+    {
+      "path": "scripts/launch-check.js",
+      "bytes": 683,
+      "sha256": "63d868469a2a6b6a113ceb59a94079d21c81f1133525744ac9207eefc9f14044"
+    },
+    {
+      "path": "scripts/launch-preflight.js",
+      "bytes": 1712,
+      "sha256": "19c4ea30dce28e8d52e4f9ad40e82c73a9d21cbf74021b42ba2397fe1b43d8a5"
+    },
+    {
+      "path": "scripts/migrate.js",
+      "bytes": 2905,
+      "sha256": "c3f951cbe9318c375960895945b047de2435a290c7b0187ff3cf57cb5a18643d"
+    },
+    {
+      "path": "scripts/ops-snapshot.js",
+      "bytes": 1113,
+      "sha256": "f802fed247884f07a8f03411ef675734b7dfc4d60b95026753947815c84560d1"
+    },
+    {
+      "path": "scripts/performance-report.js",
+      "bytes": 756,
+      "sha256": "a10f655bc538da5ffffa066f626aa33313173e9bf5df3faff687ebab8eb6be50"
+    },
+    {
+      "path": "scripts/phase15-check.js",
+      "bytes": 1597,
+      "sha256": "e2ee1318252e15f616f635203f0298ed11eb170814adff99fa326eae7976c094"
+    },
+    {
+      "path": "scripts/phase16-check.js",
+      "bytes": 1137,
+      "sha256": "a4911612977f5205b97a84e9b0098ff4a5f915fd01eed47b80533b207ea18b81"
+    },
+    {
+      "path": "scripts/phase17-check.js",
+      "bytes": 1110,
+      "sha256": "3201897a42a49a3bc712964ca0b7aab1e0fcdc5dc84a285a1c397e568a4da57c"
+    },
+    {
+      "path": "scripts/phase18-check.js",
+      "bytes": 1043,
+      "sha256": "05a4dee0e631c3636cc005f0ac10d921c14e5f32e2e848f6865d2886bbac018f"
+    },
+    {
+      "path": "scripts/phase19-check.js",
+      "bytes": 1015,
+      "sha256": "2c53074a99b43f8833edf96949bce9d8a8b047fd679103060d801ebe56e3b055"
+    },
+    {
+      "path": "scripts/phase20-check.js",
+      "bytes": 1170,
+      "sha256": "e0a61b23bdf1c72b5bc0435ccb097baf273578103c2784602ec6b3440d41f084"
+    },
+    {
+      "path": "scripts/production-smoke.js",
+      "bytes": 1423,
+      "sha256": "9d7ecc21afa7306431da3d014519326be97a8bd54f5f94db8beca0732b210667"
+    },
+    {
+      "path": "scripts/production-verify.js",
+      "bytes": 620,
+      "sha256": "83c64f7cb15d98f30c0c33e4bcb9e51bc6cfb70f2d90ad102bba32bf7ab3902b"
+    },
+    {
+      "path": "scripts/release-check.js",
+      "bytes": 781,
+      "sha256": "43c10d531fbdefd004c339133aa280660d6cd5d4cec0286d6cf55849c1168cba"
+    },
+    {
+      "path": "scripts/release-manifest.js",
+      "bytes": 890,
+      "sha256": "fd6300c9e71ee8328955c696b65e47091c873e8d7c729e98911afccaec54c7cd"
+    },
+    {
+      "path": "scripts/render-deploy.js",
+      "bytes": 1925,
+      "sha256": "ca9fad75175df681bbed9a01e3a6ac33338a265e9830d5644789e47f74641d9c"
+    },
+    {
+      "path": "scripts/render-rollback.js",
+      "bytes": 1005,
+      "sha256": "9ddb5d0be785fbaaf66d160603768e8abd6ea46d67cfc2e7b6b354f47fdc2137"
+    },
+    {
+      "path": "scripts/restore-check.js",
+      "bytes": 983,
+      "sha256": "702994cb2866d53b1c7a2884960747c0498424a7be07d2b8408dfdd99c0b90ef"
+    },
+    {
+      "path": "server.js",
+      "bytes": 58408,
+      "sha256": "793977c3c2905948efd2e86805c971c00dc8fd32f7cdf0ac96736773d5340b03"
+    },
+    {
+      "path": "test/phase13.test.js",
+      "bytes": 607,
+      "sha256": "5cdd47e86536dd29b318f22e5d2830114004d4bf882736f6f12628b4edd1d11e"
+    },
+    {
+      "path": "test/smoke.test.js",
+      "bytes": 691,
+      "sha256": "09cc63a5224060840e3be0cf5b3c9d69df39cbcd6f96426218498cafc7335988"
+    }
+  ]
+}

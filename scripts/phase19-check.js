@@ -1,0 +1,11 @@
+const fs=require('node:fs');
+const cp=require('node:child_process');
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const required=['package.json','server.js','render.yaml','Dockerfile','DEPLOYMENT.md','PHASE19.md','scripts/performance-report.js'];
+for(const f of required) if(!fs.existsSync(f)) throw new Error(`Missing ${f}`);
+if(pkg.version!=='19.0.0') throw new Error(`Expected 19.0.0, found ${pkg.version}`);
+for(const s of ['phase19:check','performance:report']) if(!pkg.scripts[s]) throw new Error(`Missing ${s}`);
+for(const f of ['server.js','scripts/phase19-check.js','scripts/performance-report.js']) cp.execFileSync(process.execPath,['--check',f],{stdio:'inherit'});
+const server=fs.readFileSync('server.js','utf8');
+for(const n of ['busy_timeout = 5000','synchronous = NORMAL','express.static','performance_samples','Server-Timing','/api/performance']) if(!server.includes(n)) throw new Error(`server.js missing ${n}`);
+console.log('Phase 19 performance and scalability checks passed.');

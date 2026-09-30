@@ -1,0 +1,16 @@
+const fs=require('node:fs');
+const cp=require('node:child_process');
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const required=['package.json','server.js','index.html','Dockerfile','render.yaml','.env.example','DEPLOYMENT.md','PHASE20.md','scripts/render-deploy.js','scripts/render-rollback.js','scripts/production-smoke.js'];
+for(const f of required) if(!fs.existsSync(f)) throw new Error(`Missing ${f}`);
+if(pkg.version!=='20.0.0') throw new Error(`Expected release 20.0.0, found ${pkg.version}`);
+for(const s of ['start','phase20:check','render:deploy','render:rollback','production:verify','production:smoke','launch:preflight']) if(!pkg.scripts[s]) throw new Error(`Missing npm script: ${s}`);
+for(const f of ['server.js','scripts/render-deploy.js','scripts/render-rollback.js','scripts/production-smoke.js','scripts/phase20-check.js']) cp.execFileSync(process.execPath,['--check',f],{stdio:'inherit'});
+const docker=fs.readFileSync('Dockerfile','utf8');
+if(docker.includes('--ignore-scripts')) throw new Error('Dockerfile suppresses dependency install scripts; better-sqlite3 may not build.');
+if(!docker.includes('npm install --omit=dev')) throw new Error('Dockerfile production dependency install is missing.');
+const server=fs.readFileSync('server.js','utf8');
+for(const n of ['performance_samples','release_version','launch_state','/api/health','/api/ready']) if(!server.includes(n)) throw new Error(`server.js missing ${n}`);
+const render=fs.readFileSync('render.yaml','utf8');
+for(const n of ['healthCheckPath: /api/ready','mountPath: /var/data','DB_PATH','BACKUP_DIR']) if(!render.includes(n)) throw new Error(`render.yaml missing ${n}`);
+console.log('Launch preflight passed.');

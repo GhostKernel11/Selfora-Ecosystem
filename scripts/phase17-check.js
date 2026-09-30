@@ -1,0 +1,12 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const cp=require('node:child_process');
+const required=['package.json','server.js','render.yaml','PHASE17.md','scripts/phase17-check.js','scripts/feedback-summary.js'];
+for(const file of required) if(!fs.existsSync(path.join(process.cwd(),file))) throw new Error(`Missing ${file}`);
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+if(!/^1[7-8]\.0\.0$/.test(pkg.version)) throw new Error(`Unsupported release version ${pkg.version}`);
+for(const script of ['phase17:check','feedback:summary']) if(!pkg.scripts[script]) throw new Error(`Missing ${script} script`);
+for(const file of ['server.js','scripts/migrate.js','scripts/feedback-summary.js']) cp.execFileSync(process.execPath,['--check',file],{stdio:'inherit'});
+const server=fs.readFileSync('server.js','utf8');
+for(const needle of ["phase:17","/api/feedback","/api/client-errors","user_feedback","client_errors","applyMigrations();"]) if(!server.includes(needle)) throw new Error(`server.js missing ${needle}`);
+console.log('Phase 17 feedback and observability checks passed.');

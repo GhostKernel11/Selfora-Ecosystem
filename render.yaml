@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: academic-ecosystem
+    runtime: docker
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /api/ready
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /var/data/academic.sqlite
+      - key: BACKUP_DIR
+        value: /var/data/backups
+    disk:
+      name: academic-data
+      mountPath: /var/data
+      sizeGB: 1

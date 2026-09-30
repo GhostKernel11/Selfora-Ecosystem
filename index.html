@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Academic Ecosystem — a connected academic command center.">
+  <title>Selfora System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div>
+          <strong>Selfora</strong>
+          <span>System</span>
+        </div>
+      </div>
+
+      <nav class="nav-section">
+        <p class="nav-label">MAIN</p>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-view="learn"><span>◈</span> Learn</button>
+        <button class="nav-item" data-view="tasks"><span>✓</span> Tasks <b id="taskBadge">0</b></button>
+        <button class="nav-item" data-view="schedule"><span>◷</span> Schedule</button>
+        <button class="nav-item" data-view="subjects"><span>▦</span> Subjects</button>
+        <button class="nav-item" data-view="goals"><span>◎</span> Goals</button>
+        <button class="nav-item" data-view="library"><span>▤</span> Library</button>
+        <button class="nav-item" data-view="community"><span>♧</span> Community</button>
+        <button class="nav-item" data-view="collaboration"><span>◫</span> Collaboration</button>
+        <button class="nav-item" data-view="rooms"><span>◉</span> Study Rooms</button>
+        <button class="nav-item" data-view="analytics"><span>⌁</span> Analytics</button>
+        <button class="nav-item" data-view="progress"><span>↗</span> Progress</button>
+        <button class="nav-item" data-view="story"><span>✦</span> Academic Story</button>
+      </nav>
+
+      <nav class="nav-section secondary">
+        <p class="nav-label">DISCOVER</p>
+        <button class="nav-item" data-view="explore"><span>⌕</span> Explore</button>
+        <button class="nav-item" data-view="activity"><span>≋</span> Activity</button>
+        <button class="nav-item" data-view="profile"><span>◯</span> Profile</button>
+        <button class="nav-item" data-view="notifications"><span>♢</span> Notifications</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-profile">
+          <div class="avatar">R</div>
+          <div><strong id="sidebarName">Student</strong><span>Computer Science</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menuButton" aria-label="Open menu">☰</button>
+        <div class="global-search">
+          <span>⌕</span>
+          <input id="globalSearch" type="search" placeholder="Search your academic ecosystem...">
+          <kbd>Ctrl K</kbd>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" id="notificationButton" title="Notifications">♢</button>
+          <button class="ask-button" id="askButton">+ Ask the Community</button>
+          <button class="account-button" id="accountButton">Account</button>
+          <button class="avatar top-avatar" id="profileButton">R</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div id="viewRoot"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="bottom-nav">
+    <button data-view="dashboard">⌂<span>Home</span></button>
+    <button data-view="tasks">✓<span>Tasks</span></button>
+    <button data-view="learn">◈<span>Learn</span></button>
+    <button data-view="community">♧<span>Community</span></button>
+    <button data-view="profile">◯<span>Profile</span></button>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <script src="js/backend-client.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T08:39:38.036Z",
+  "generatedAt": "2026-10-01T00:09:25.834Z",
   "files": [
     {
       "path": ".dockerignore",
@@ -38,13 +38,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 4342,
-      "sha256": "9063be6449dcce23ef8e74d58b063bb34ebd80351b9e372001435504d0b7ac76"
+      "bytes": 4334,
+      "sha256": "82a0144aa0410c30bb71390f76e460b491609a2e6f46d8c6e661bc7e77a6ec6d"
     },
     {
       "path": "js/app.js",
-      "bytes": 108395,
-      "sha256": "fc40ddcfd6200cc2797056454629de3b7a903d45686326dec0ab1b1064b2d439"
+      "bytes": 108391,
+      "sha256": "86f707f561db0c56f91f401a21b78b0fd2b4e199d9af3da3e0a4714fe06d0e7d"
     },
     {
       "path": "js/backend-client.js",
@@ -103,8 +103,8 @@
     },
     {
       "path": "RELEASE-MANIFEST.json",
-      "bytes": 6614,
-      "sha256": "7e911077ae51feb9446476a8ea9353162fbb58d36dc2a15b608b1c7e894663ff"
+      "bytes": 7402,
+      "sha256": "a5b3e2196c8d909aa6855daa8956db1aac3761676920b927f1f09910704a7c7b"
     },
     {
       "path": "render.yaml",

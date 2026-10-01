@@ -650,36 +650,80 @@ function migrateLegacyUser(userId, stateJson) {
   if (!stateJson) return false;
   try { saveNormalizedState(userId, JSON.parse(stateJson)); return true; } catch (e) { console.error('Legacy migration failed:', e.message); return false; }
 }
+app.post('/api/auth/register', (req, res) => {
+  const name = String(req.body.name || '').trim();
+  const email = String(req.body.email || '').trim().toLowerCase();
+  const password = String(req.body.password || '');
 
-app.post('/api/auth/register', (req,res)=>{
-  const name=String(req.body.name||'').trim(), email=String(req.body.email||'').trim().toLowerCase(), password=String(req.body.password||'');
-  if(name.length<2)return res.status(400).json({error:'Name must be at least 2 characters.'});
-  if(!/^\S+@\S+\.\S+$/.test(email))return res.status(400).json({error:'Enter a valid email address.'});
-  if(password.length<8)return res.status(400).json({error:'Password must be at least 8 characters.'});
-  if(db.prepare('SELECT id FROM users WHERE email=?').get(email))return res.status(409).json({error:'An account with that email already exists.'});
-  const {hash,salt}=hashPassword(password);
-  const info=db.prepare('INSERT INTO users(name,email,password_hash,password_salt) VALUES(?,?,?,?)').run(name,email,hash,salt);
-  db.prepare('INSERT INTO academic_profiles(user_id,program,initials) VALUES(?,?,?)').run(info.lastInsertRowid,'Computer Science Student',name.charAt(0).toUpperCase());
-  db.prepare('INSERT INTO academic_metrics(user_id) VALUES(?)').run(info.lastInsertRowid);
-  const user=db.prepare('SELECT id,name,email,created_at FROM users WHERE id=?').get(info.lastInsertRowid); setSession(res,user.id); res.status(201).json({user:publicUser(user),hasState:false});
+  if (name.length < 2) return res.status(400).json({ error: 'Name must be at least 2 characters' });
+  if (!/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({ error: 'Invalid email address' });
+  if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
+
+  const existingUser = db.prepare('SELECT id FROM users WHERE email=?').get(email);
+  if (existingUser) return res.status(400).json({ error: 'Email already registered' });
+
+  const { hash, salt } = hashPassword(password);
+  const info = db.prepare('INSERT INTO users (name, email, password_hash, salt) VALUES (?, ?, ?, ?)').run(name, email, hash, salt);
+  const userId = info.lastInsertRowid;
+
+  db.prepare('INSERT INTO academic_profiles (user_id) VALUES (?)').run(userId);
+  db.prepare('INSERT INTO academic_metrics (user_id) VALUES (?)').run(userId);
+
+  const user = db.prepare('SELECT id, name, email, created_at FROM users WHERE id=?').get(userId);
+  setSession(res, user.id);
+  return res.json({ user: publicUser(user) });
 });
-app.post('/api/auth/login',(req,res)=>{
-  const email=String(req.body.email||'').trim().toLowerCase(),password=String(req.body.password||'');
-  const user=db.prepare('SELECT * FROM users WHERE email=?').get(email); if(!user||!verifyPassword(password,user.password_hash,user.password_salt))return res.status(401).json({error:'Email or password is incorrect.'});
-  if(!db.prepare('SELECT 1 FROM academic_profiles WHERE user_id=?').get(user.id)){db.prepare('INSERT INTO academic_profiles(user_id,program,initials) VALUES(?,?,?)').run(user.id,'Computer Science Student',user.name.charAt(0).toUpperCase());db.prepare('INSERT OR IGNORE INTO academic_metrics(user_id) VALUES(?)').run(user.id);}
-  setSession(res,user.id); res.json({user:publicUser(user),hasState:Boolean(db.prepare('SELECT 1 FROM subjects WHERE user_id=? LIMIT 1').get(user.id)||db.prepare('SELECT 1 FROM tasks WHERE user_id=? LIMIT 1').get(user.id))});
+
+app.post('/api/auth/login', (req, res) => {
+  const email = String(req.body.email || '').trim().toLowerCase();
+  const password = String(req.body.password || '');
+  
+  const user = db.prepare('SELECT * FROM users WHERE email=?').get(email);
+  if (!user || !verifyPassword(password, user.password_hash, user.salt)) {
+    return res.status(401).json({ error: 'Invalid email or password' });
+  }
+
+  setSession(res, user.id);
+  return res.json({ user: publicUser(user) });
 });
-app.post('/api/auth/logout',(req,res)=>{clearSession(res);res.json({ok:true});});
-app.get('/api/auth/sessions',auth,(req,res)=>res.json({sessions:db.prepare('SELECT id,created_at,last_seen,expires_at,user_agent FROM sessions WHERE user_id=? ORDER BY last_seen DESC').all(req.user.id).map(s=>({...s,current:s.id===req.session.id}))}));
-app.delete('/api/auth/sessions/:id',auth,(req,res)=>{const id=assertId(req.params.id);const info=db.prepare('DELETE FROM sessions WHERE id=? AND user_id=?').run(id,req.user.id);if(!info.changes)return res.status(404).json({error:'Session not found.'});audit(req.user.id,'auth.session_revoked','session',id);res.json({ok:true});});
 
-app.get('/api/auth/me',auth,(req,res)=>res.json({user:publicUser(req.user),hasState:Boolean(db.prepare('SELECT 1 FROM academic_profiles WHERE user_id=?').get(req.user.id)&&db.prepare('SELECT COUNT(*) c FROM tasks WHERE user_id=?').get(req.user.id).c)}));
+app.post('/api/auth/logout', (req, res) => {
+  clearSession(res);
+  return res.json({ success: true });
+});
 
-app.get('/api/state',auth,(req,res)=>res.json({state:loadNormalizedState(req.user.id)}));
-app.put('/api/state',auth,(req,res)=>{
-  if(!req.body||typeof req.body.state!=='object')return res.status(400).json({error:'A state object is required.'});
-  try { saveNormalizedState(req.user.id,req.body.state); res.json({ok:true,storage:'normalized-sqlite',updatedAt:new Date().toISOString()}); }
-  catch(e){ console.error(e); res.status(500).json({error:'Unable to save academic state.'}); }
+app.get('/api/auth/sessions', auth, (req, res) => {
+  return res.json({ sessions: getSessions(req.user.id) });
+});
+
+app.delete('/api/auth/sessions/:id', auth, (req, res) => {
+  const id = req.params.id;
+  deleteSession(req.user.id, id);
+  return res.json({ success: true });
+});
+
+app.get('/api/auth/me', auth, (req, res) => {
+  return res.json({ user: publicUser(req.user) });
+});
+
+app.get('/api/state', auth, (req, res) => {
+  return res.json({ state: loadNormalizedState(req.user.id) });
+});
+
+app.put('/api/state', auth, (req, res) => {
+  if (!req.body || typeof req.body.state !== 'object') {
+    return res.status(400).json({ error: 'Invalid state object' });
+  }
+
+  try {
+    saveNormalizedState(req.user.id, req.body.state);
+    return res.json({ success: true });
+  } catch (e) {
+    console.error(e);
+    if (!res.headersSent) {
+      return res.status(500).json({ error: 'Unable to save state' });
+    }
+  }
 });
 
 // Focused entity APIs: Phase 8 starts exposing normalized resources directly.

@@ -456,13 +456,12 @@ app.use((req,res,next)=>{
   res.setHeader('Permissions-Policy','camera=(),microphone=(),geolocation=()');
   res.setHeader('Cross-Origin-Opener-Policy','same-origin');
   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'");
-  res.on('finish',()=>{
-    const durationMs=Number(process.hrtime.bigint()-started)/1e6;
-    if(req.path.startsWith('/api')){
-      try{ db.prepare('INSERT INTO performance_samples(method,path,status,duration_ms) VALUES(?,?,?,?)').run(req.method,req.path,res.statusCode,durationMs); }catch{}
-    }
-    res.setHeader('Server-Timing',`app;dur=${durationMs.toFixed(1)}`);
-  });
+ res.on('finish', ()=>{
+  const durationMs=Number(process.hrtime.bigint()-started)/1e6;
+  if(req.path.startsWith('/api')){
+    try{ db.prepare('INSERT INTO performance_samples(method,path,status,duration_ms) VALUES(?,?,?,?)').run(req.method,req.path,res.statusCode,durationMs); }catch(e){}
+  }
+});
   next();
 });
 app.use('/css',express.static(path.join(__dirname,'css'),{maxAge:'7d',immutable:true,etag:true,setHeaders:(res)=>res.setHeader('Cache-Control','public, max-age=604800, immutable')}));
